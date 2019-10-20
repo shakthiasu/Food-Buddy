@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/logo" />
+</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        android:gravity="center">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:hint="Enter Dish"
+            android:id="@+id/editText"
+            android:inputType="text"
+            android:textAlignment="center"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="Optional"
+            android:id="@+id/optional"
+            android:inputType="text"
+            android:textAlignment="center"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_black_24dp"
+            android:layout_weight="1"
+            android:id="@+id/search"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_voice_black_24dp"
+            android:layout_weight="1"
+            android:id="@+id/voice"/>
+
+    </LinearLayout>
+    <net.gotev.speech.ui.SpeechProgressView
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclerView">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+</LinearLayout>

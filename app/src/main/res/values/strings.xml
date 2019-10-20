@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Food Buddy</string>
+    <string name="permission_required">You need to grant the permission to use the microphone</string>
+    <string name="enable_google_voice_typing">Please enable Google Voice Typing to use speech recognition!</string>
+    <string name="repeat">Repeat please</string>
+</resources>
