@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
                             }
                         }
                         else {
-                                 CusineText = "None";
+                            CusineText = "None";
                         }
                         if (receipe2.has("dishType")) {
                             JSONArray dishType = receipe2.getJSONArray("dishType");
@@ -191,12 +191,14 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
                         JSONObject PROCNT = totalNutrients.getJSONObject("PROCNT");
                         if (totalNutrients.has("FATRN")){
                             JSONObject FATRN = totalNutrients.getJSONObject("FATRN");
-                             Tfat = FATRN.getString("quantity");
+                            Tfat = FATRN.getString("quantity");
                         }
                         else {
-                             Tfat = "0.0";
+                            Tfat = "0.0";
                         }
 
+//                        JSONObject CHOCDF = totalNutrients.getJSONObject("CHOCDF");
+//                        String carbs = CHOCDF.getString("quantity");
                         String protien = PROCNT.getString("quantity");
                         String fat = FAT.getString("quantity");
 
@@ -248,6 +250,10 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
                                 foodList.add(food1);
                             }
                         }
+//                        else {
+//                            Food food1 = new Food(label, energy, protien, fat, ingrCancatinate, url, dietArray, Tfat,CusineText,DishText);
+//                            foodList.add(food1);
+//                        }
 
 
                         mAdapter.notifyDataSetChanged();
@@ -300,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
     }
 
     private void onRecordAudioPermissionGranted() {
-
+//        button.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
 
         try {
@@ -364,7 +370,8 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
 
     @Override
     public void onSpeechResult(String result) {
-
+//        button.setVisibility(View.VISIBLE);
+//        linearLayout.setVisibility(View.GONE);
         progress.setVisibility(View.GONE);
         editText.setText(result);
 
@@ -373,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
 
         } else {
             search.performClick();
-
+//            Speech.getInstance().say(result);
         }
     }
 }
