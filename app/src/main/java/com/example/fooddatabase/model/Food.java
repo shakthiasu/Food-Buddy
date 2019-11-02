@@ -1,9 +1,10 @@
 package com.example.fooddatabase.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Food {
+public class Food implements Serializable {
 
     String label;
     String carbs;
