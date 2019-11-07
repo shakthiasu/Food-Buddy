@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.fooddatabase.model.Food;
 
 import java.io.Serializable;
@@ -29,6 +31,7 @@ public class DetailActivity extends AppCompatActivity {
     public TextView DishType;
     public CardView cardView;
     String labels = "";
+    ImagePopup imagePopup2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +64,19 @@ public class DetailActivity extends AppCompatActivity {
         dietlabel.setText(labels);
         CusineType.setText(food.getCusine());
         DishType.setText(food.getDish());
-        Toast.makeText(this, ""+food.getLabel(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, ""+food.getLabel(), Toast.LENGTH_SHORT).show();
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePopup2.initiatePopupWithGlide(food.getURL());
+                imagePopup2.viewPopup();
+            }
+        });
     }
 
     private void initilize() {
+        imagePopup2 = new ImagePopup(this);
         label = findViewById(R.id.label);
         ingredients = findViewById(R.id.ingredients);
         carbs = findViewById(R.id.carbs);
