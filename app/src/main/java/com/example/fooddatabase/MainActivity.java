@@ -10,15 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.example.fooddatabase.adapter.MyRecyclerAdapter;
 import com.example.fooddatabase.model.Food;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import net.gotev.speech.GoogleVoiceTypingDisabledException;
 import net.gotev.speech.Speech;
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
     String Tfat = "0.0";
     ArrayList<String> ingredientsArray  = new ArrayList<>();
     boolean global = false;
+    FloatingActionButton mFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         editText = findViewById(R.id.editText);
         optional = findViewById(R.id.optional);
+        mFloatingActionButton = findViewById(R.id.floatingActionButton);
         mAdapter = new MyRecyclerAdapter(foodList,this,imagePopup,optional.getText().toString());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -118,6 +125,18 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
                 return false;
             }
         });
+
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ViewDialog alert = new ViewDialog();
+                alert.showDialog(MainActivity.this,
+
+                                "Please type your dish in the first search box. If you want to search by ingredients then your the second box followed by a comma for each ingredient." +
+                                "To initiate voice search please click the microphone icon. ");
+            }
+        });
     }
 
     private void retrofitRequest(String optp){
@@ -133,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray array  = jsonObject.getJSONArray("hits");
-
+//                    Toast.makeText(MainActivity.this, "great"+array.length(), Toast.LENGTH_SHORT).show();
                     for (int i=0;i<array.length();i++){
                         ingredientsArray.clear();
                         String CusineText ="";
@@ -197,7 +216,8 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
                              Tfat = "0.0";
                         }
 
-
+//                        JSONObject CHOCDF = totalNutrients.getJSONObject("CHOCDF");
+//                        String carbs = CHOCDF.getString("quantity");
                         String protien = PROCNT.getString("quantity");
                         String fat = FAT.getString("quantity");
 
@@ -249,7 +269,11 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
                                 foodList.add(food1);
                             }
                         }
-//
+//                        else {
+//                            Food food1 = new Food(label, energy, protien, fat, ingrCancatinate, url, dietArray, Tfat,CusineText,DishText);
+//                            foodList.add(food1);
+//                        }
+
 
                         mAdapter.notifyDataSetChanged();
                         spotsDialog.dismiss();
@@ -291,17 +315,17 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         } else {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                // permission was granted, yay!
                 onRecordAudioPermissionGranted();
             } else {
-
+                // permission denied, boo!
                 Toast.makeText(MainActivity.this, R.string.permission_required, Toast.LENGTH_LONG).show();
             }
         }
     }
 
     private void onRecordAudioPermissionGranted() {
-
+//        button.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
 
         try {
@@ -338,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
                 .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        // do nothing
                     }
                 })
                 .show();
@@ -365,7 +389,8 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
 
     @Override
     public void onSpeechResult(String result) {
-
+//        button.setVisibility(View.VISIBLE);
+//        linearLayout.setVisibility(View.GONE);
         progress.setVisibility(View.GONE);
         editText.setText(result);
 
@@ -374,6 +399,31 @@ public class MainActivity extends AppCompatActivity implements SpeechDelegate{
 
         } else {
             search.performClick();
+//            Speech.getInstance().say(result);
+        }
+    }
+
+
+    public class ViewDialog {
+
+        public void showDialog(Activity activity, String msg){
+            final Dialog dialog = new Dialog(activity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.mypopup);
+
+            TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+            text.setText(msg);
+
+            Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
 
         }
     }
