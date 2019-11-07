@@ -104,13 +104,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Bo
             public void onClick(View view) {
                 imagePopup.initiatePopupWithGlide(foodList.get(position).getURL());
                 imagePopup.viewPopup();
-//                Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, ""+foodList.get(position).getURL(), Toast.LENGTH_SHORT).show();
             }
         });
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, ""+position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("arg", foodList.get(position)); // getText() SHOULD NOT be static!!!
                 context.startActivity(intent);
